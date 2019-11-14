@@ -6,8 +6,8 @@
 #d2 {
 	max-width: 100%;
 	height: 50px;
-	background-color: rgb(175,2,30);
-	//background-color: silver;
+	/*background-color: rgb(175,2,30);*/
+	background-color: silver;
 }
 
 table.maintable > tbody > tr > td {
