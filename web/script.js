@@ -6,18 +6,20 @@ $.ajax({url: sf, type: 'GET', dataType: 'text'})
     .done(function(data) {
 		//console.log(data)
 		var nsplit = data.split(/\n/g)
-		var csplit = []
+		var tsplit = []
 		nsplit.forEach(function(item, index) {
 			var tab = item.split(/\t/g)
-			csplit.push(tab)
+			tsplit.push(tab)
 		})
 		
-			//console.log(csplit)
+			console.log(tsplit)
 			
       var id;
       var table;
+			
+			console.log(tsplit[3][6])
 
-      csplit.forEach(function(item, index) {
+      tsplit.forEach(function(item, index) {
 			//console.log(item)
 				
         if (item[0]) {
@@ -41,7 +43,7 @@ $.ajax({url: sf, type: 'GET', dataType: 'text'})
 
 
               cell0.innerHTML = item[1];
-              if (item[6]) {
+              if (item[6].length > 1) {
                 var a = document.createElement("A")
                 a.href = item[6]
                 a.innerHTML = "See images"
