@@ -1,25 +1,27 @@
 var obj = [];
 
 $(function() {
-  var sf = "https://docs.google.com/spreadsheets/d/1IOCHQu-gHoDctHqFTMVjat7UlaJ7LXuV6vCJuNdoBnY/gviz/tq?gid=210595935&tqx=out:json";
-  $.ajax({
-      url: sf,
-      type: 'GET',
-      dataType: 'text'
-    })
+var sf = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReZb_mDJxh-jny2ntNF0hWYed5q1B9umQtn3u2oaw_KL3np7m_Ng6ppY1_DUEnXooSUCguS8j9Xj6b/pub?output=tsv";
+$.ajax({url: sf, type: 'GET', dataType: 'text'})
     .done(function(data) {
-      const r = data.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/);
-
-      obj = JSON.parse(r[1]);
-      obj = obj.table.rows
-      console.log(obj)
+		//console.log(data)
+		var nsplit = data.split(/\n/g)
+		var csplit = []
+		nsplit.forEach(function(item, index) {
+			var tab = item.split(/\t/g)
+			csplit.push(tab)
+		})
+		
+			//console.log(csplit)
+			
       var id;
       var table;
 
-      obj.forEach(function(item, index) {
+      csplit.forEach(function(item, index) {
+			//console.log(item)
 				
-        if (item.c[0]) {
-          id = document.getElementById(item.c[0].v);
+        if (item[0]) {
+          id = document.getElementById(item[0]);
           table = document.createElement("TABLE");
           table.className = "listing";
         } else {
@@ -29,20 +31,19 @@ $(function() {
             var cell0 = row.insertCell(0)
 
             //  var txt = item.gsx$text.$t.toLowerCase().replace(/ /g, '');
-            if (!item.c[2]) {
-              id.innerHTML = item.c[1].v;
-              //cell0.className = "soldout";
-              //id.appendChild(table);
+            if (!item[2]) {
+              id.innerHTML = item[1];
+
             } else {
               cell0.className = "cell0";
 
               var cell1 = row.insertCell(1)
 
 
-              cell0.innerHTML = item.c[1].v;
-              if (item.c[6]) {
+              cell0.innerHTML = item[1];
+              if (item[6]) {
                 var a = document.createElement("A")
-                a.href = item.c[6].v
+                a.href = item[6]
                 a.innerHTML = "See images"
                 cell0.append(" ");
                 cell0.append(a);
@@ -51,12 +52,12 @@ $(function() {
 
               var form = document.createElement("FORM");
 
-              if (isNaN(parseInt(item.c[2].v))) {
+              if (isNaN(parseInt(item[2]))) {
 								
-                form.innerHTML = item.c[2].v;
+                form.innerHTML = item[2];
               } else {
-							console.log(parseInt(item.c[2].v));
-                cell0.innerHTML += ' <b>$' + item.c[2].v + '</b>';
+							//console.log(parseInt(item.c[2].v));
+                cell0.innerHTML += ' <b>$' + item[2] + '</b>';
 
                 form.action = "https://www.paypal.com/cgi-bin/webscr";
                 form.method = "post";
@@ -93,19 +94,19 @@ $(function() {
                 var itemname = document.createElement("INPUT");
                 itemname.name = "item_name";
                 itemname.type = "hidden";
-                itemname.value = item.c[4].v;
+                itemname.value = item[4];
                 form.appendChild(itemname);
 
                 var itemnumber = document.createElement("INPUT");
                 itemnumber.name = "item_number";
                 itemnumber.type = "hidden";
-                itemnumber.value = item.c[3].v;
+                itemnumber.value = item[3];
                 form.appendChild(itemnumber);
 
                 var amount = document.createElement("INPUT");
                 amount.name = "amount";
                 amount.type = "hidden";
-                amount.value = item.c[2].v;
+                amount.value = item[2];
                 form.appendChild(amount);
 
                 var nonote = document.createElement("INPUT");
@@ -129,7 +130,7 @@ $(function() {
                 var weight = document.createElement("INPUT");
                 weight.name = "weight";
                 weight.type = "hidden";
-                weight.value = item.c[5].v;
+                weight.value = item[5];
                 form.appendChild(weight);
 
                 var weightunit = document.createElement("INPUT");
@@ -145,18 +146,15 @@ $(function() {
 
               cell1.appendChild(form);
               cell1.className = "cell1";
-
-
+							
+							//console.log(item)
               id.appendChild(table);
-              //id.appendChild(document.createElement("BR"));
 
 
             }
-          } catch (err) {
-						console.log("catch")
-					} finally {
-            //   console.log(table)
           }
+					catch (err) {console.log(err)}
+					finally {}
         }
 
       });
