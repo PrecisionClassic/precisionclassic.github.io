@@ -1,7 +1,10 @@
 var obj = [];
 
 $(function() {
-var sf = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReZb_mDJxh-jny2ntNF0hWYed5q1B9umQtn3u2oaw_KL3np7m_Ng6ppY1_DUEnXooSUCguS8j9Xj6b/pub?output=tsv";
+var url1 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReZb_mDJxh-jny2ntNF0hWYed5q1B9umQtn3u2oaw_KL3np7m_Ng6ppY1_DUEnXooSUCguS8j9Xj6b/pub?gid="
+var url2 = "&single=true&output=tsv"
+var sf = url1 + gid + url2
+
 $.ajax({url: sf, type: 'GET', dataType: 'text'})
     .done(function(data) {
 		//console.log(data)
