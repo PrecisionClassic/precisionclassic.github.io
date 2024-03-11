@@ -1,7 +1,7 @@
 var obj = [];
 
 $(function() {
-var url1 = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRi4QXmn5i7YRBT8u0N50lRkUeeb_xrL-V7C_yc-FIS6oQf2NKh2V9t0WsYzxqNwZRpo7_qPQGzwNZd/pub?gid="
+var url1 = "https://docs.google.com/spreadsheets/d/e/10yESXDvzsrLI1-DvdKSTSeQcBGjkMMIkrvRkGCAkik8/pub?gid="
 var url2 = "&single=true&output=tsv"
 var sf = url1 + gid + url2
 
